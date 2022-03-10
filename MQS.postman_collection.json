@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "44d8c3f0-282b-47a3-848a-d5a20e04a5b9",
+		"name": "MQS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response is PONG\", () => {",
+							"    pm.expect(jsonData.message).to.eql(\"PONG\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://mqs.eodc.eu/stac/v1/_mgmt/ping",
+					"protocol": "https",
+					"host": [
+						"mqs",
+						"eodc",
+						"eu"
+					],
+					"path": [
+						"stac",
+						"v1",
+						"_mgmt",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Landing Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Type is Catalog\", () => {",
+							"    pm.expect(jsonData.type).to.eql(\"Catalog\");",
+							"});",
+							"",
+							"pm.test(\"Stac Versoin is 1.0.0\", () => {",
+							"    pm.expect(jsonData.stac_version).to.eql(\"1.0.0\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://mqs.eodc.eu/stac/v1/",
+					"protocol": "https",
+					"host": [
+						"mqs",
+						"eodc",
+						"eu"
+					],
+					"path": [
+						"stac",
+						"v1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Collections",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://mqs.eodc.eu/stac/v1/collections",
+					"protocol": "https",
+					"host": [
+						"mqs",
+						"eodc",
+						"eu"
+					],
+					"path": [
+						"stac",
+						"v1",
+						"collections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Conformance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Test conformance array properties\", () => {",
+							"    //array is not empty",
+							"    pm.expect(jsonData.conformsTo).to.not.be.empty;",
+							"    //array includes OGC API Conformance Class Core",
+							"    pm.expect(jsonData.conformsTo).to.include(\"http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://mqs.eodc.eu/stac/v1/conformance",
+					"protocol": "https",
+					"host": [
+						"mqs",
+						"eodc",
+						"eu"
+					],
+					"path": [
+						"stac",
+						"v1",
+						"conformance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get VITO S1 GRD Collection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Type is Collection\", () => {",
+							"    pm.expect(jsonData.type).to.eql(\"Collection\");",
+							"});",
+							"",
+							"pm.test(\"id is VITO|urn:eop:VITO:CGS_S1_GRD_L1\", () => {",
+							"    pm.expect(jsonData.id).to.eql(\"VITO|urn:eop:VITO:CGS_S1_GRD_L1\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://mqs.eodc.eu/stac/v1/collections/VITO|urn:eop:VITO:CGS_S1_GRD_L1",
+					"protocol": "https",
+					"host": [
+						"mqs",
+						"eodc",
+						"eu"
+					],
+					"path": [
+						"stac",
+						"v1",
+						"collections",
+						"VITO|urn:eop:VITO:CGS_S1_GRD_L1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get VITO S1 GRD Collection Items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Type is Collection\", () => {",
+							"    pm.expect(jsonData.type).to.eql(\"FeatureCollection\");",
+							"});",
+							"",
+							"pm.test(\"Test features array properties\", () => {",
+							"    //array is not empty",
+							"    pm.expect(jsonData.features).to.not.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://mqs.eodc.eu/stac/v1/collections/VITO|urn:eop:VITO:CGS_S1_GRD_L1/items",
+					"protocol": "https",
+					"host": [
+						"mqs",
+						"eodc",
+						"eu"
+					],
+					"path": [
+						"stac",
+						"v1",
+						"collections",
+						"VITO|urn:eop:VITO:CGS_S1_GRD_L1",
+						"items"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
